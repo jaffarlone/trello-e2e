@@ -6,7 +6,7 @@
 // ─────────────────────────────────────────────
 const { test, expect } = require("@playwright/test");
 const { BASE_URL, PERF, auth, timedRequest } = require("../utils/api");
-const state = require("../utils/state");
+const { state, clear } = require("../utils/state");
 
 test.describe("@functional Cleanup", () => {
 
@@ -92,4 +92,10 @@ test.describe("@functional Cleanup", () => {
     console.log(`  ✔ Board confirmed deleted (status: ${response.status()})`);
   });
 
+});
+
+// Wipe the persisted state file after all cleanup is done
+test.afterAll(() => {
+  clear();
+  console.log("  ✔ State file cleared");
 });

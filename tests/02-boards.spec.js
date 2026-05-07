@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────
 const { test, expect } = require("@playwright/test");
 const { BASE_URL, PERF, auth, timedRequest } = require("../utils/api");
-const state = require("../utils/state");
+const { state } = require("../utils/state");
 
 test.describe("@functional Board Management", () => {
 

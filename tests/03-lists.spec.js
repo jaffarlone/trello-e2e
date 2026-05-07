@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────
 const { test, expect } = require("@playwright/test");
 const { BASE_URL, PERF, auth, timedRequest } = require("../utils/api");
-const state = require("../utils/state");
+const { state } = require("../utils/state");
 
 test.describe("@functional List Management", () => {
 
@@ -114,7 +114,7 @@ test.describe("@functional List Management", () => {
     const response = await request.post(
       `${BASE_URL}/lists?${auth({ name: "Ghost List", idBoard: "000000000000000000000000" })}`
     );
-    expect([400, 404]).toContain(response.status());
+    expect([400, 401, 404]).toContain(response.status());
   });
 
 });

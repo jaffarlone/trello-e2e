@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────
 const { test, expect } = require("@playwright/test");
 const { BASE_URL, PERF, auth, timedRequest } = require("../utils/api");
-const state = require("../utils/state");
+const { state } = require("../utils/state");
 
 test.describe("@functional Card Management", () => {
 
@@ -159,11 +159,20 @@ test.describe("@functional Card Management", () => {
     expect(body.idList).toBe(state.doneListId);
   });
 
-  test("@negative CREATE card with empty name returns 400", async ({ request }) => {
+  test("@negative CREATE card with empty name — Trello returns 200 with blank name", async ({ request }) => {
+    // Trello does NOT reject empty card names — it creates an untitled card
+    // This test documents the actual API behavior and cleans up immediately
     const response = await request.post(
       `${BASE_URL}/cards?${auth({ idList: state.listId, name: "" })}`
     );
-    expect(response.status()).toBe(400);
+    expect(response.status()).toBe(200);
+
+    const body = await response.json();
+    expect(body).toHaveProperty("id");
+    expect(body.name).toBe("");
+
+    // clean up the untitled card immediately
+    await request.delete(`${BASE_URL}/cards/${body.id}?${auth()}`);
   });
 
   test("@negative CREATE card without list ID returns 400", async ({ request }) => {
