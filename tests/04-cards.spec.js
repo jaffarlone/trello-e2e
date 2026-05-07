@@ -5,7 +5,25 @@
 // ─────────────────────────────────────────────
 const { test, expect } = require("@playwright/test");
 const { BASE_URL, PERF, auth, timedRequest } = require("../utils/api");
-const { state } = require("../utils/state");
+// const { state } = require("../utils/state");
+
+let state = {};
+
+test.beforeAll(async ({ request }) => {
+  // Create board
+  const board = await request.post(`/boards`, {
+    params: { name: 'QA Board' }
+  });
+  const boardData = await board.json();
+  state.boardId = boardData.id;
+
+  // Create list
+  const list = await request.post(`/lists`, {
+    params: { name: 'To Do', idBoard: state.boardId }
+  });
+  const listData = await list.json();
+  state.listId = listData.id;
+});
 
 test.describe("@functional Card Management", () => {
 
