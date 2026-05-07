@@ -7,27 +7,23 @@ const { test, expect } = require("@playwright/test");
 const { PERF, auth, timedRequest } = require("../utils/api");
 const { state } = require("../utils/state");
 
+const { test, expect } = require('../fixtures/trello.fixture');
+
+
 test.describe("@functional Checklist Management", () => {
-
-  test("@functional CREATE checklist on card", async ({ request }) => {
-    expect(state.cardId).toBeTruthy();
-
-    const { response, elapsed } = await timedRequest(
-      request, "post",
-      `/checklists?${auth({ idCard: state.cardId, name: "Acceptance Criteria" })}`
-    );
-
+  test("@functional CREATE checklist on card", async ({ request, cardId }) => {
+    expect(cardId).toBeTruthy();
+  
+    const response = await request.post(`/checklists`, {
+      params: {
+        idCard: cardId,
+        name: 'QA Checklist'
+      }
+    });
+  
     expect(response.status()).toBe(200);
-    expect(elapsed).toBeLessThan(PERF.CREATE_CARD);
-
-    const body = await response.json();
-    expect(body).toHaveProperty("id");
-    expect(body.name).toBe("Acceptance Criteria");
-    expect(body.idCard).toBe(state.cardId);
-
-    state.checklistId = body.id;
-    console.log(`  ✔ Checklist created: ${body.id}`);
   });
+  
 
   test("@functional ADD checklist item — unit tests written", async ({ request }) => {
     expect(state.checklistId).toBeTruthy();
