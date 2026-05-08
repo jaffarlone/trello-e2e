@@ -13,7 +13,6 @@ module.exports = defineConfig({
 
   // Reporters
   reporter: [
-    ["list"],
     ["html", { outputFolder: "reports/html", open: "never" }],
     ["json", { outputFile: "reports/results.json" }],
   ],

@@ -3,21 +3,27 @@
   "version": "1.0.0",
   "description": "End-to-end API tests for Trello REST API using Playwright",
   "scripts": {
-    "test":            "playwright test --config=playwright.config.js",
+    "test": "playwright test --config=playwright.config.js",
     "test:functional": "playwright test --config=playwright.config.js --grep \"@functional\"",
-    "test:performance":"playwright test --config=playwright.config.js --grep \"@performance\"",
-    "test:negative":   "playwright test --config=playwright.config.js --grep \"@negative\"",
-    "test:headed":     "playwright test --config=playwright.config.js --headed",
-    "report":          "playwright show-report reports/html",
-    "clean":           "rm -rf reports test-results"
+    "test:performance": "playwright test --config=playwright.config.js --grep \"@performance\"",
+    "test:negative": "playwright test --config=playwright.config.js --grep \"@negative\"",
+    "test:headed": "playwright test --config=playwright.config.js --headed",
+    "report": "playwright show-report reports/html",
+    "clean": "rm -rf reports test-results"
   },
   "dependencies": {
+    "allure": "^3.7.0",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0"
   },
-  "keywords": ["trello", "playwright", "api-testing", "e2e"],
+  "keywords": [
+    "trello",
+    "playwright",
+    "api-testing",
+    "e2e"
+  ],
   "author": "",
   "license": "MIT"
 }
