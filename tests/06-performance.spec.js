@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────
-// tests/06-performance.spec.js
-// @performance
-// ─────────────────────────────────────────────
 const { test, expect } = require('../fixtures/trello.fixture');
 const { get }          = require('../utils/apiClient');
 const { timedRequest } = require('../utils/performance');
@@ -14,7 +10,6 @@ test.describe("@performance Performance Benchmarks", () => {
     );
     expect(response.status()).toBe(200);
     expect(elapsed).toBeLessThan(1500);
-    console.log(`  ✔ GET /boards: ${elapsed}ms`);
   });
 
   test("GET card under 1.5s", async ({ request, trello }) => {
@@ -23,7 +18,6 @@ test.describe("@performance Performance Benchmarks", () => {
     );
     expect(response.status()).toBe(200);
     expect(elapsed).toBeLessThan(1500);
-    console.log(`  ✔ GET /cards: ${elapsed}ms`);
   });
 
 });
